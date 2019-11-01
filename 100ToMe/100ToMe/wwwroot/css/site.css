@@ -24,10 +24,31 @@ a {
   border-color: #1861ac;
 }
 
+.navbar {
+    min-height: 80px;
+}
+
+#homeSection .row {
+    height:82vh;
+}
+
+.firstCol {
+    background-color: #874994;
+    overflow:hidden;
+}
+
+    .firstCol i {
+        color: #7a4187;
+        font-size: 90vh;
+    }
+
+.secondCol {
+    background-color:#fff;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 @media (min-width: 768px) {
   html {
