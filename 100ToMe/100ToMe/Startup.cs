@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using _100ToMe.Helpers;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace _100ToMe
 {
@@ -43,6 +45,8 @@ namespace _100ToMe
             });
 
             services.AddHttpClient();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -41,9 +41,21 @@ a {
     overflow:hidden;
 }
 
+    .firstCol .row {
+        background-image: url('../img/paper-plane (1).png');
+        background-position:right;
+        background-repeat:no-repeat;
+        background-size:100%;
+    }
+
     .firstCol i {
-        color: #7a4187;
-        font-size: 100vh;
+        font-size:40px;
+        color:#fff;
+    }
+
+    .firstCol h4 {
+        color:#fff;
+        font-size:30px;
     }
 
 .myLogo {
