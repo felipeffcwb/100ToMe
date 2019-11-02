@@ -36,23 +36,13 @@ namespace _100ToMe
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //})
-            //.AddFacebook(facebookOptions =>
-            //{
-            //    facebookOptions.AppId = "401750780503358"; //TODO: Fill with your data from facebook
-            //    facebookOptions.AppSecret = "02a543203e1aa68003f53e79951e874b"; //TODO: Fill with your data from facebook
-            //}).AddCookie();
-
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = "401750780503358";
                 facebookOptions.AppSecret = "02a543203e1aa68003f53e79951e874b";
             });
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

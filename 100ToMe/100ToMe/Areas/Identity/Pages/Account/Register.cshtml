@@ -11,9 +11,11 @@
             </div>
         </div>
         <div class="col-4 secondCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
+                <h4>Crie uma conta gratuita!</h4>
+                <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Ou faça login!</a></h6>
+            </div>
             <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="d-flex flex-column align-items-center">
-                <h4>Crie uma nova conta!</h4>
-                <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group col-10">
                     <label asp-for="Input.Email"></label>
@@ -32,7 +34,7 @@
                 </div>
                 <div class="container-fluid d-flex justify-content-center" style="max-height:40px !important; padding-left:1.5px !important;">
                     <div class="col-10">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn myButtons text-white">Criar!</button>
                     </div>
                 </div>
             </form>
@@ -41,7 +43,7 @@
                     <div class="col-10">
                         @foreach (var provider in Model.ExternalLogins)
                         {
-                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            <button type="submit" class="btn myButtons text-white" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">Ir com @provider.DisplayName</button>
                         }
                     </div>
                 </div>

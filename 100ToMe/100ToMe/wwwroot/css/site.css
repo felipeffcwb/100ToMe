@@ -1,5 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+body {
+    overflow:hidden;
+}
 
 a.navbar-brand {
   white-space: normal;
@@ -26,10 +29,11 @@ a {
 
 .navbar {
     min-height: 80px;
+    border-bottom:2px solid #f1f1f1;
 }
 
 #homeSection .row {
-    height:82vh;
+    height:100vh;
 }
 
 .firstCol {
@@ -39,8 +43,16 @@ a {
 
     .firstCol i {
         color: #7a4187;
-        font-size: 90vh;
+        font-size: 100vh;
     }
+
+.myLogo {
+    color: #874994;
+}
+
+.myButtons {
+    background-color: #874994;
+}
 
 .secondCol {
     background-color:#fff;
