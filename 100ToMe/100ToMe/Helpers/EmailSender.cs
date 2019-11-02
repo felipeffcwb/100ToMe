@@ -28,7 +28,7 @@ namespace _100ToMe.Helpers
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("felipe@oction.com.br"),
+                From = new EmailAddress("felipe@oction.com.br", "100toMe"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

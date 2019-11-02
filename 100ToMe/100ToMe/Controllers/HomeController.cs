@@ -23,6 +23,7 @@ namespace _100ToMe.Controllers
 
         public IActionResult Index()
         {
+            string user = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(_userManager.GetUserId(User)))
             {
                 return Redirect("Identity/Account/Register");
