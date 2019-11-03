@@ -49,6 +49,32 @@
                         </div>
                     </div>
                 </div>
+            </form>
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div class="container-fluid d-flex justify-content-center" style="max-height:40px !important; padding-left:1.5px !important;">
+                        <div class="col-9">
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal mt-1">
+                        <div class="container-fluid d-flex justify-content-center" style="max-height:40px !important; padding-left:1.5px !important;">
+                            <div class="col-10">
+                                <div class="form-group">
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn myButtons text-white" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">Ir com @provider.DisplayName</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+            }
+            <form>
                 <div class="form-group row d-flex justify-content-center" style="height:auto; width:100%;">
                     <div class="col-10">
                         <div class="checkbox">
@@ -69,30 +95,6 @@
                     </div>
                 </div>
             </form>
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div class="container-fluid d-flex justify-content-center" style="max-height:40px !important; padding-left:1.5px !important;">
-                        <div class="col-10">
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal mt-1">
-                        <div class="container-fluid d-flex justify-content-center" style="max-height:40px !important; padding-left:1.5px !important;">
-                            <div class="col-10">
-                                <div class="form-group">
-                                    @foreach (var provider in Model.ExternalLogins)
-                                    {
-                                        <button type="submit" class="btn myButtons text-white" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">Ir com @provider.DisplayName</button>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                }
-            }
         </div>
     </div>
 </section>

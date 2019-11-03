@@ -68,6 +68,17 @@ a {
 
 .secondCol {
     background-color:#fff;
+    border-left:ridge;
+    border-top:ridge;
+}
+
+.profileNav .active {
+    background-color: #874994 !important;
+}
+
+.profileNav {
+    padding-left:10px;
+    padding-right:10px;
 }
 /* Sticky footer styles
 -------------------------------------------------- */

@@ -1,0 +1,78 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<section id="homeSection">
+    <div class="row">
+        <div class="col-8 firstCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column">
+                <div class="col-6 d-flex justify-content-center align-items-start flex-column" style="height:500px;">
+                    <div class="d-flex align-items-center mb-5">
+                        <i class="fas fa-file-upload mr-3"></i>
+                        <h4>Suba arquivos em seu perfil.</h4>
+                    </div>
+                    <div class="d-flex align-items-center mb-5">
+                        <i class="fas fa-link mr-3"></i>
+                        <h4>Gere e guarde seus links.</h4>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-envelope mr-3"></i>
+                        <h4>Compartilhe com a galera, é rápido!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 secondCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
+                <partial name="_ManageNav" />
+                @*<h4>Crie uma conta gratuita!</h4>
+            <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Ou faça login!</a></h6>*@
+            </div>
+            <form id="profile-form" method="post" class="d-flex flex-column align-items-center mb-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group col-10">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control" disabled />
+                </div>
+                <div class="form-group col-10">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="container-fluid d-flex justify-content-center" style="max-height:40px !important; padding-left:1.5px !important;">
+                    <div class="col-10">
+                        <button id="update-profile-button" type="submit" class="btn myButtons text-white">Save</button>
+                    </div>
+                </div>
+            </form>
+            <partial name="_StatusMessage" model="Model.StatusMessage" />
+        </div>
+    </div>
+</section>
+
+@*<h4>@ViewData["Title"]</h4>
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <div class="row">
+        <div class="col-md-6">
+            <form id="profile-form" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+                <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>*@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
