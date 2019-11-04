@@ -1,5 +1,8 @@
 ﻿@page
 @model ConfirmEmailModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Confirm email";
 }
@@ -24,11 +27,22 @@
             </div>
         </div>
         <div class="col-4 secondCol">
+            @if (SignInManager.IsSignedIn(User))
+            {
             <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
                 <h4>Tudo certo</h4>
                 <partial name="_StatusMessage" model="Model.StatusMessage" />
-                <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Tudo certo, faça login!</a></h6>
+                <h6 class="font-weight-normal"><a asp-controller="Perfil" asp-action="Index">Voltar para sua conta!</a></h6>
             </div>
+            }
+            else
+            {
+                <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
+                    <h4>Tudo certo</h4>
+                    <partial name="_StatusMessage" model="Model.StatusMessage" />
+                    <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Tudo certo, faça login!</a></h6>
+                </div>
+            }
         </div>
     </div>
 </section>

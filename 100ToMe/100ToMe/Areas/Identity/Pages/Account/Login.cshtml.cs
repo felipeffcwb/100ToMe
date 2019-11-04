@@ -87,7 +87,8 @@ namespace _100ToMe.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Index", "Perfil");
+                    //return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

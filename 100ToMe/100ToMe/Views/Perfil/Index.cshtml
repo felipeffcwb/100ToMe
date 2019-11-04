@@ -1,0 +1,18 @@
+﻿@model _100ToMe.ViewModels.ViewModel
+<section id="homeSection">
+    <div class="row">
+        <div class="col-8 firstCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column">
+                <div class="col-6 d-flex justify-content-center align-items-start flex-column" style="height:500px;">
+                    <partial name="_StatusMessageView" for="StatusMessage" />
+                </div>
+            </div>
+        </div>
+        <div class="col-4 secondCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
+                @*<h4>Crie uma conta gratuita!</h4>
+                    <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Ou faça login!</a></h6>*@
+            </div>
+        </div>
+    </div>
+</section>

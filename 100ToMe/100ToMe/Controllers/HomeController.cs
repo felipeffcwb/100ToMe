@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using _100ToMe.Models;
+using _100ToMe.ViewModels;
 
 namespace _100ToMe.Controllers
 {
@@ -14,7 +15,6 @@ namespace _100ToMe.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private UserManager<IdentityUser> _userManager;
-
         public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
@@ -23,12 +23,11 @@ namespace _100ToMe.Controllers
 
         public IActionResult Index()
         {
-            string user = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(_userManager.GetUserId(User)))
             {
-                return Redirect("Identity/Account/Register");
+                return Redirect("/Identity/Account/Register");
             }
-            return View();
+            return RedirectToAction("Index", "Perfil");
         }
 
         public IActionResult Privacy()

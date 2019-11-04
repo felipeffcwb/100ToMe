@@ -1,0 +1,128 @@
+﻿@page
+@model ExternalLoginsModel
+@{
+    ViewData["Title"] = "Manage your external logins";
+    ViewData["ActivePage"] = ManageNavPages.ExternalLogins;
+}
+
+<section id="homeSection">
+    <div class="row">
+        <div class="col-8 firstCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column">
+                <div class="col-6 d-flex justify-content-center align-items-start flex-column" style="height:500px;">
+                    <div class="d-flex align-items-center mb-5">
+                        <i class="fas fa-file-upload mr-3"></i>
+                        <h4>Suba arquivos em seu perfil.</h4>
+                    </div>
+                    <div class="d-flex align-items-center mb-5">
+                        <i class="fas fa-link mr-3"></i>
+                        <h4>Gere e guarde seus links.</h4>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-envelope mr-3"></i>
+                        <h4>Compartilhe com a galera, é rápido!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 secondCol">
+            <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
+                <partial name="_ManageNav" />
+                @*<h4>Crie uma conta gratuita!</h4>
+                    <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Ou faça login!</a></h6>*@
+            </div>
+            <table class="table">
+                <tbody>
+                    @foreach (var login in Model.CurrentLogins)
+                    {
+                        <tr>
+                            <td>@login.ProviderDisplayName</td>
+                            <td>
+                                @if (Model.ShowRemoveButton)
+                                {
+                                    <form id="remove-login" asp-page-handler="RemoveLogin" method="post" class="d-flex flex-column align-items-center mb-3">
+                                        <div>
+                                            <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                            <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                            <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
+                                        </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                    @: &nbsp;
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (Model.OtherLogins?.Count > 0)
+            {
+                <div class="row d-flex justify-content-center" style="height:auto !important;">
+                    <div class="col-10 d-flex flex-column align-items-center">
+                        <h4 class="mb-3">Adicione outro serviço para logar.</h4>
+                        <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="d-flex flex-column align-items-center mb-3">
+                            <div id="socialLoginList">
+                                <p>
+                                    @foreach (var provider in Model.OtherLogins)
+                                    {
+                                        <button id="link-login-button" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            <partial name="_StatusMessage" for="StatusMessage" />
+        </div>
+    </div>
+</section>
+
+@*<partial name="_StatusMessage" for="StatusMessage" />
+    @if (Model.CurrentLogins?.Count > 0)
+    {
+        <h4>Registered Logins</h4>
+        <table class="table">
+            <tbody>
+                @foreach (var login in Model.CurrentLogins)
+                {
+                    <tr>
+                        <td>@login.ProviderDisplayName</td>
+                        <td>
+                            @if (Model.ShowRemoveButton)
+                            {
+                                <form id="remove-login" asp-page-handler="RemoveLogin" method="post">
+                                    <div>
+                                        <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                        <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                        <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                @: &nbsp;
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (Model.OtherLogins?.Count > 0)
+    {
+        <h4>Add another service to log in.</h4>
+        <hr />
+        <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
+            <div id="socialLoginList">
+                <p>
+                    @foreach (var provider in Model.OtherLogins)
+                    {
+                        <button id="link-login-button" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    }
+                </p>
+            </div>
+        </form>
+    }*@
