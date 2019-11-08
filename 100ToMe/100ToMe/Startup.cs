@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using _100ToMe.Helpers;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using _100ToMe.DAO;
 
 namespace _100ToMe
 {
@@ -47,6 +48,7 @@ namespace _100ToMe
             services.AddHttpClient();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddScoped<RepositorieDAO>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

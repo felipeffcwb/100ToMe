@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using _100ToMe.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,5 +13,7 @@ namespace _100ToMe.Data
             : base(options)
         {
         }
+
+        public DbSet<Repositorie> repositories { get; set; }
     }
 }

@@ -1,18 +1,33 @@
 ﻿@model _100ToMe.ViewModels.ViewModel
-<section id="homeSection">
-    <div class="row">
-        <div class="col-8 firstCol">
-            <div class="row d-flex justify-content-center align-items-center flex-column">
-                <div class="col-6 d-flex justify-content-center align-items-start flex-column" style="height:500px;">
-                    <partial name="_StatusMessageView" for="StatusMessage" />
+<partial name="_StatusMessageView" for="StatusMessage" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<div class="container">
+    <div class="row d-flex align-items-center" style="min-height:150px;">
+        <div class="col-12 d-flex justify-content-between">
+            <h1>Meus uploads</h1>
+            <button class="btn btn-sm myButtons text-white" data-toggle="modal" data-target="#exampleModal">Criar Respositório</button>
+            <partial name="_AddRepoModal" />
+        </div>
+    </div>
+</div>
+<div class="container-fluid p-0 m-0">
+    <div class="row bg-light border-top" style="min-height:100vh;">
+        <div class="container d-flex flex-column">
+            <div class="row" style="height:60px; display:table !important;"></div>
+            <div class="row">
+                <div class="col-12 d-flex">
+                    <div class="col-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="~/img/transferir.svg" alt="Imagem de capa do card">
+                            <div class="card-body">
+                                <h5 class="card-title">Título do card</h5>
+                                <a href="#" class="btn btn-primary">Visitar</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-4 secondCol">
-            <div class="row d-flex justify-content-center align-items-center flex-column" style="height:150px;">
-                @*<h4>Crie uma conta gratuita!</h4>
-                    <h6 class="font-weight-normal"><a asp-area="Identity" asp-page="/Account/Login">Ou faça login!</a></h6>*@
-            </div>
-        </div>
     </div>
-</section>
+</div>
