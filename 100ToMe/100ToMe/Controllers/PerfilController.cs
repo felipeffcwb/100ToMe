@@ -33,12 +33,15 @@ namespace _100ToMe.Controllers
             var userEmail = await _userManager.GetUserAsync(User);
             if (await _userManager.IsEmailConfirmedAsync(userEmail))
             {
-                return View();
+                ViewModel VM = new ViewModel();
+                VM.repositories = _repositorieDAO.BuscarRepoDeUser(user);
+                return View(VM);
             }
             else
             {
                 ViewModel VM = new ViewModel();
                 VM.StatusMessage = "Por favor, entre em seu email e confirme sua conta para continuar usando sua conta";
+                VM.repositories = _repositorieDAO.BuscarRepoDeUser(user);
                 return View(VM);
             }
         }

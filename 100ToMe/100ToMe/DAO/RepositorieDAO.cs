@@ -31,5 +31,18 @@ namespace _100ToMe.DAO
                 return false;
             }
         }
+
+        internal List<Repositorie> BuscarRepoDeUser(string userId)
+        {
+            try
+            {
+                return _context.repositories.Where(x => x.UserId.Equals(userId) && x.Status).ToList();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
     }
 }

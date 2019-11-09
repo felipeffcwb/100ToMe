@@ -15,18 +15,19 @@
     <div class="row bg-light border-top" style="min-height:100vh;">
         <div class="container d-flex flex-column">
             <div class="row" style="height:60px; display:table !important;"></div>
-            <div class="row">
-                <div class="col-12 d-flex">
-                    <div class="col-3">
+            <div class="row cardsRow">
+                @foreach (Repositorie item in Model.repositories)
+                {
+                    <div class="col-md-4 col-sm-12 mb-5">
                         <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="~/img/transferir.svg" alt="Imagem de capa do card">
                             <div class="card-body">
-                                <h5 class="card-title">Título do card</h5>
+                                <h5 class="card-title">@item.Name</h5>
                                 <a href="#" class="btn btn-primary">Visitar</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>
