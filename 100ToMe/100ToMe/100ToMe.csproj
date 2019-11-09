@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
@@ -20,6 +21,11 @@
     <PackageReference Include="Sendgrid" Version="9.12.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.6.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Arquivos\Arquivos_Usuario\Recebidos\" />
   </ItemGroup>
 
 </Project>

@@ -15,5 +15,6 @@ namespace _100ToMe.Data
         }
 
         public DbSet<Repositorie> repositories { get; set; }
+        public DbSet<Files> files { get; set; }
     }
 }

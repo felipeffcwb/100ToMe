@@ -1,14 +1,33 @@
-﻿
+﻿@model List<_100ToMe.Models.Files>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
     <div class="row d-flex align-items-center" style="min-height:150px;">
+        @if (ViewBag.Erro != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert" style="height:60px; width:100%;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @ViewBag.Erro
+            </div>
+        }
+
+        @if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert" style="height:60px; width:100%;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @ViewBag.Success
+            </div>
+        }
         <div class="col-12 d-flex justify-content-between">
             <h1>Meus uploads</h1>
-            <button class="btn btn-sm myButtons text-white" data-toggle="modal" data-target="#exampleModal">Subir arquivo</button>
-            <partial name="_AddRepoModal" />
+            <form asp-controller="Repositories" asp-action="Upload" enctype="multipart/form-data">
+                <label class="btn btn-sm myButtons text-white mb-0">
+                    Selecionar<input type="file" name="arquivos" style="display: none;" />
+                </label>
+                <input class="btn btn-sm myButtons text-white" type="submit" value="Enviar" />
+            </form>
         </div>
     </div>
 </div>
@@ -17,9 +36,51 @@
         <div class="container d-flex flex-column">
             <div class="row" style="height:60px; display:table !important;"></div>
             <div class="row cardsRow p-5 border" style="border-radius:3px;">
-                
+                @foreach (Files item in Model)
+                {
+                    var nameSplitted = item.Name.Split("__");
+                    <div class="col-md-4 col-sm-12 mb-5 d-flex justify-content-center align-items-center">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="~/img/transferir.svg" alt="Imagem de capa do card">
+                            <div class="card-body">
+                                <h5 class="card-title">@nameSplitted[0]</h5>
+                                <div class="container d-flex justify-content-start" style="padding:0 !important;">
+                                    <a href="javascript:void(0)" class="mr-1" data-toggle="modal" data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir"></i></a>
+                                    <div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Novo Repo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <p>Deseja excluir este repositório ?</p>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary" onclick="ExcluirRepo(@item.ArquivoId)">Sim!</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (ViewBag.ErrorList != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="height:60px; width:100%;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @ViewBag.ErrorList
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
-

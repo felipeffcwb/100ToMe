@@ -105,5 +105,33 @@ namespace _100ToMe.DAO
                 throw;
             }
         }
+
+        internal bool AddFile(Files files)
+        {
+            try
+            {
+                _context.files.Add(files);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        internal List<Files> BuscarFilesPorRepo(string fileId)
+        {
+            try
+            {
+                return _context.files.Where(x => x.FileId.Equals(fileId) && x.Status).ToList();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
     }
 }

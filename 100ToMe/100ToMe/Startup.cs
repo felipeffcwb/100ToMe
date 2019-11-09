@@ -45,6 +45,13 @@ namespace _100ToMe
                 facebookOptions.AppSecret = "02a543203e1aa68003f53e79951e874b";
             });
 
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+            });
+
             services.AddHttpClient();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
@@ -72,6 +79,7 @@ namespace _100ToMe
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
