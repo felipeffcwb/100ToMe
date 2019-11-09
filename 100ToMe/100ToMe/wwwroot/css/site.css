@@ -152,4 +152,19 @@ body {
         background: #555;
     }
 
+.fa-trash-alt{
+    color:#ccc;
+    font-size:20px;
+}
+
+.fa-share-alt {
+    color: #ccc;
+    font-size: 20px;
+}
+
+.fa-sign-in-alt {
+    color: #ccc;
+    font-size: 20px;
+}
+
 

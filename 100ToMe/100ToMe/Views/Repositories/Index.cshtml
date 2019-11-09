@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex align-items-center" style="min-height:150px;">
+        <div class="col-12 d-flex justify-content-between">
+            <h1>Meus uploads</h1>
+            <button class="btn btn-sm myButtons text-white" data-toggle="modal" data-target="#exampleModal">Subir arquivo</button>
+            <partial name="_AddRepoModal" />
+        </div>
+    </div>
+</div>
+<div class="container-fluid p-0 m-0">
+    <div class="row bg-light border-top" style="min-height:100vh;">
+        <div class="container d-flex flex-column">
+            <div class="row" style="height:60px; display:table !important;"></div>
+            <div class="row cardsRow p-5 border" style="border-radius:3px;">
+                
+            </div>
+        </div>
+    </div>
+</div>
+

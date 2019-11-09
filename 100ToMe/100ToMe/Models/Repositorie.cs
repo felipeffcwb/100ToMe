@@ -18,6 +18,7 @@ namespace _100ToMe.Models
         public string Email { get; set; }
         public string QuantFiles { get; set; }
         public string Link { get; set; }
+        public string FileId { get; set; }
         public bool Status { get; set; } = true;
         public DateTime DataRegister { get; set; } = DateTimeBR.DataHoraAtual();
         public DateTime DataLastChange { get; set; } = DateTimeBR.DataHoraAtual();

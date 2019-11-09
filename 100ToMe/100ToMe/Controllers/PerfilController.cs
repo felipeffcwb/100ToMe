@@ -78,6 +78,7 @@ namespace _100ToMe.Controllers
                 repositorie.Name = name;
                 repositorie.UserId = _userManager.GetUserId(User);
                 repositorie.Email = _userManager.GetUserName(User);
+                repositorie.FileId = _userManager.GetUserId(User) + "_" + DateTimeBR.DataHoraAtual().Ticks;
                 if (_repositorieDAO.AdicionarRepositories(repositorie))
                 {
                     return true;
