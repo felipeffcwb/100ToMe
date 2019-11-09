@@ -40,6 +40,22 @@
         });
     }
 
+    function ExcluirRepo(obj) {
+        $.ajax({
+            method: "POST",
+            dataType: "JSON",
+            url: '@Url.Action("ExcluirRepo", "Perfil")',
+            data: { repoId: obj },
+            success: function (resp) {
+                if (resp) {
+                    SuccessAddRepo();
+                } else {
+                    ErrorAddRepo();
+                }
+    },
+        });
+    }
+
     function SuccessAddRepo() {
         Swal.fire({
   icon: 'success',
