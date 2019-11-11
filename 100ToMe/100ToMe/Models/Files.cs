@@ -20,6 +20,7 @@ namespace _100ToMe.Models
         public double Size { get; set; }
         public string Name { get; set; }
         public string FileId { get; set; }
+        public string ExtensionType { get; set; }
         public bool Status { get; set; } = true;
         public DateTime DataRegister { get; set; } = DateTimeBR.DataHoraAtual();
         public DateTime DataLastChange { get; set; } = DateTimeBR.DataHoraAtual();

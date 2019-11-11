@@ -16,7 +16,7 @@ namespace _100ToMe.Models
         public string Name { get; set; }
         public string UserId { get; set; }
         public string Email { get; set; }
-        public string QuantFiles { get; set; }
+        public int QuantFiles { get; set; }
         public string Link { get; set; }
         public string FileId { get; set; }
         public bool Status { get; set; } = true;

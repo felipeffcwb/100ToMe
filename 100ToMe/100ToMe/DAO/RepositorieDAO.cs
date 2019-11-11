@@ -133,5 +133,33 @@ namespace _100ToMe.DAO
                 throw;
             }
         }
+
+        internal Repositorie BuscarRepoPorFileId(string fileId)
+        {
+            try
+            {
+                return _context.repositories.FirstOrDefault(x => x.FileId.Equals(fileId));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        internal void AtualizarQuantFiles(Repositorie repositorie)
+        {
+            try
+            {
+                repositorie.DataLastChange = DateTimeBR.DataHoraAtual();
+                _context.Entry(repositorie).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

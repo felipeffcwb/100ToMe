@@ -20,9 +20,12 @@
                 {
                     <div class="col-md-4 col-sm-12 mb-5 d-flex justify-content-center align-items-center">
                         <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="~/img/transferir.svg" alt="Imagem de capa do card">
+                            <div class="card-header d-flex justify-content-center">
+                                <i class="far fa-folder" style="color:#ccc; font-size:100px;"></i>
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title">@item.Name</h5>
+                                <label>N° de arquivos: @item.QuantFiles</label>
                                 <div class="container d-flex justify-content-start" style="padding:0 !important;">
                                     <a href="@Url.Action("Index", "Repositories", new {fileid = item.FileId })" class="mr-3" data-toggle="tooltip" data-placement="top" title="Entrar no repo"><i class="fas fa-sign-in-alt"></i></a>
                                     <a href="javascript:void(0)" class="mr-3" data-toggle="tooltip" data-placement="top" title="Compartilhar"><i class="fas fa-share-alt"></i></a>

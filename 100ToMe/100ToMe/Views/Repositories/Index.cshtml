@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string extensionIcon = "far fa-folder";
 }
 <div class="container">
     <div class="row d-flex align-items-center" style="min-height:150px;">
@@ -38,10 +40,39 @@
             <div class="row cardsRow p-5 border" style="border-radius:3px;">
                 @foreach (Files item in Model)
                 {
+
+                    switch (item.ExtensionType)
+                    {
+                        case "jpg":
+                            extensionIcon = "far fa-file-image";
+                            break;
+
+                        case "png":
+                            extensionIcon = "far fa-file-image";
+                            break;
+
+                        case "pdf":
+                            extensionIcon = "far fa-file-pdf";
+                            break;
+
+                        case "txt":
+                            extensionIcon = "far fa-file-alt";
+                            break;
+
+                        case "tmp":
+                            extensionIcon = "far fa-folder";
+                            break;
+
+                        case "gif":
+                            extensionIcon = "far fa-folder";
+                            break;
+                    }
                     var nameSplitted = item.Name.Split("__");
                     <div class="col-md-4 col-sm-12 mb-5 d-flex justify-content-center align-items-center">
                         <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="~/img/transferir.svg" alt="Imagem de capa do card">
+                            <div class="card-header d-flex justify-content-center">
+                                <i class="@extensionIcon" style="color:#ccc; font-size:100px;"></i>
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title">@nameSplitted[0]</h5>
                                 <div class="container d-flex justify-content-start" style="padding:0 !important;">
