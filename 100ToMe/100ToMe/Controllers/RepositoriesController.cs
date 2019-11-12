@@ -124,7 +124,33 @@ namespace _100ToMe.Controllers
              $"com tamanho total de : {tamanhoArquivos} bytes";
 
             //retorna a viewdata
-            return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile});
+            return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile });
+        }
+
+        public bool ExcluirFiles(string nameFile, int fileId)
+        {
+            string caminho_WebRoot = _hostingEnvironment.WebRootPath;
+            string pasta = "Arquivos_Usuario";
+            string caminhoDestinoArquivo = caminho_WebRoot + "\\Arquivos\\" + pasta + "\\";
+            string caminhoDestinoArquivoOriginal = caminhoDestinoArquivo + "\\Recebidos\\" + nameFile;
+
+            if (System.IO.File.Exists(caminhoDestinoArquivoOriginal))
+            {
+                try
+                {
+                    System.IO.File.Delete(caminhoDestinoArquivoOriginal);
+                    Files files = new Files();
+                    files = _repositorieDAO.BuscarFilePorId(fileId);
+                    _repositorieDAO.ExcluirFile(files);
+                    return true;
+                }
+                catch (System.IO.IOException e)
+                {
+
+                }
+            }
+                    return false;
+
         }
 
         private static void VerificaExtensaoAddDb(IFormFile arquivo, Files files)

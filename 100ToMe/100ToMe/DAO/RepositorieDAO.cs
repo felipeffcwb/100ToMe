@@ -161,5 +161,45 @@ namespace _100ToMe.DAO
                 throw;
             }
         }
+
+        internal Files BuscarFilePorId(int fileId)
+        {
+            try
+            {
+                Files files = new Files();
+                files = _context.files.FirstOrDefault(x => x.ArquivoId.Equals(fileId));
+                return files;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        internal bool ExcluirFile(Files files)
+        {
+            try
+            {
+                Files files1 = files;
+                files1.DataLastChange = DateTimeBR.DataHoraAtual();
+                files1.Status = false;
+                _context.Entry(files1).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                Repositorie repositorie = new Repositorie();
+                repositorie = BuscarRepoPorFileId(files1.FileId);
+                repositorie.QuantFiles += -1;
+                repositorie.DataLastChange = DateTimeBR.DataHoraAtual();
+                _context.Entry(repositorie).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
     }
 }

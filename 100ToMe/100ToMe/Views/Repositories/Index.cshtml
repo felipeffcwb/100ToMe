@@ -76,8 +76,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">@nameSplitted[0]</h5>
                                 <div class="container d-flex justify-content-start" style="padding:0 !important;">
-                                    <a href="javascript:void(0)" class="mr-1" data-toggle="modal" data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir"></i></a>
-                                    <div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <a href="javascript:void(0)" class="mr-1" data-toggle="modal" data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir" onclick="ExcluirFile('@item.Name', @item.ArquivoId)"></i></a>
+                                    
+                                    @*<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -93,11 +94,11 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary" onclick="ExcluirRepo(@item.ArquivoId)">Sim!</button>
+                                                    <button type="button" class="btn btn-primary" >Sim!</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -115,3 +116,55 @@
         </div>
     </div>
 </div>
+<script>
+
+    
+    
+    function ExcluirFile(obj, obj2) {
+        Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+    $.ajax({
+            method: "POST",
+            dataType: "JSON",
+        url: '@Url.Action("ExcluirFiles", "Repositories")',
+        data: { nameFile: obj, fileId: obj2 },
+            success: function (resp) {
+                if (resp) {
+                    SuccessAddRepo();
+                } else {
+                    ErrorAddRepo();
+                }
+    },
+    });
+  }
+})
+    };
+
+    function SuccessAddRepo() {
+        Swal.fire({
+  icon: 'success',
+  title: 'Your work has been saved',
+}).then((result) => {
+    if (result.value) {
+        location.reload();
+  }
+})
+    }
+
+    function ErrorAddRepo() {
+        Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Something went wrong!',
+  footer: '<a href>Why do I have this issue?</a>'
+})
+    }
+</script>
