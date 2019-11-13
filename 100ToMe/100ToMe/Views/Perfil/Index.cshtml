@@ -28,7 +28,7 @@
                                 <label>N° de arquivos: @item.QuantFiles</label>
                                 <div class="container d-flex justify-content-start" style="padding:0 !important;">
                                     <a href="@Url.Action("Index", "Repositories", new {fileid = item.FileId })" class="mr-3" data-toggle="tooltip" data-placement="top" title="Entrar no repo"><i class="fas fa-sign-in-alt"></i></a>
-                                    <a href="javascript:void(0)" class="mr-3" data-toggle="tooltip" data-placement="top" title="Compartilhar"><i class="fas fa-share-alt"></i></a>
+                                    <a href="javascript:void(0)" class="mr-3" data-toggle="tooltip" data-placement="top" title="Compartilhar"><i class="fas fa-share-alt" onclick="CompartilharRepo('@item.FileId')"></i></a>
                                     <a href="javascript:void(0)" class="mr-1"  data-toggle="modal"  data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir" onclick="ExcluirRepo(@item.RepoId)"></i></a>
                                     @*<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -60,3 +60,31 @@
         </div>
     </div>
 </div>
+<script>
+    function CompartilharRepo(obj) {
+        $.ajax({
+            method: "POST",
+            dataType: "JSON",
+        url: '@Url.Action("CompartilharRepo", "Perfil")',
+        data: { fileId: obj},
+            success: function (resp) {
+                if (resp) {
+                    SuccessAddRepo();
+                } else {
+
+                }
+    },
+    });
+    }
+
+    function SuccessAddRepo() {
+        Swal.fire({
+  icon: 'success',
+  title: 'Your work has been saved',
+}).then((result) => {
+    if (result.value) {
+        location.reload();
+  }
+})
+    }
+</script>

@@ -49,6 +49,16 @@ namespace _100ToMe.DAO
                 repositorie.Status = false;
                 _context.Entry(repositorie).State = EntityState.Modified;
                 _context.SaveChanges();
+
+                List<Files> files = new List<Files>();
+                files = BuscarFilesPorRepo(repositorie.FileId);
+                foreach (Files item in files)
+                {
+                    item.DataLastChange = DateTimeBR.DataHoraAtual();
+                    item.Status = false;
+                    _context.Entry(item).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
                 return true;
             }
             catch (Exception)

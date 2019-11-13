@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using _100ToMe.DAO;
 using _100ToMe.Helpers;
 using _100ToMe.Models;
 using _100ToMe.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,11 +18,13 @@ namespace _100ToMe.Controllers
     {
         private UserManager<IdentityUser> _userManager;
         private RepositorieDAO _repositorieDAO;
+        IHostingEnvironment _hostingEnvironment;
 
-        public PerfilController(UserManager<IdentityUser> userManager, RepositorieDAO repositorieDAO)
+        public PerfilController(UserManager<IdentityUser> userManager, RepositorieDAO repositorieDAO, IHostingEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _repositorieDAO = repositorieDAO;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IActionResult> IndexAsync()
@@ -94,6 +99,22 @@ namespace _100ToMe.Controllers
                 return true;
             }
             return false;
+        }
+
+        public async Task CompartilharRepo(string fileId)
+        {
+            
+            List<Files> files = new List<Files>();
+            files = _repositorieDAO.BuscarFilesPorRepo(fileId);
+
+            //fazer foreach na classe do sendgrid para que todos os anexos sejam enviados em apenas 1 email
+            foreach (Files item in files)
+            {
+                await EmailFiles.EnviarAsync(item.FilePath, item.Name);
+            }
+            
+
+
         }
     }
 }
