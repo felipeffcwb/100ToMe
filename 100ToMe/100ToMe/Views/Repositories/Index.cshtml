@@ -70,9 +70,11 @@
                     var nameSplitted = item.Name.Split("__");
                     <div class="col-md-4 col-sm-12 mb-5 d-flex justify-content-center align-items-center">
                         <div class="card" style="width: 18rem;">
-                            <div class="card-header d-flex justify-content-center">
-                                <i class="@extensionIcon" style="color:#ccc; font-size:100px;"></i>
-                            </div>
+                            <a href="javascript:void(0)" onclick="abrirModal('@item.Name')">
+                                <div class="card-header d-flex justify-content-center">
+                                    <i class="@extensionIcon" style="color:#ccc; font-size:100px;"></i>
+                                </div>
+                            </a>
                             <div class="card-body">
                                 <h5 class="card-title">@nameSplitted[0]</h5>
                                 <div class="container d-flex justify-content-start" style="padding:0 !important;">
@@ -116,10 +118,14 @@
         </div>
     </div>
 </div>
+<partial name="_LightBox" />
 <script>
 
-    
-    
+    function abrirModal(obj) {
+        $("#myLightBox").attr("src", "/Arquivos/Arquivos_Usuario/Recebidos/" + obj);
+        $("#exampleModalLightBox").modal("show");
+    }
+
     function ExcluirFile(obj, obj2) {
         Swal.fire({
   title: 'Are you sure?',

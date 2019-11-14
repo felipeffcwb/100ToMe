@@ -29,7 +29,7 @@
                                 <div class="container d-flex justify-content-start" style="padding:0 !important;">
                                     <a href="@Url.Action("Index", "Repositories", new {fileid = item.FileId })" class="mr-3" data-toggle="tooltip" data-placement="top" title="Entrar no repo"><i class="fas fa-sign-in-alt"></i></a>
                                     <a href="javascript:void(0)" class="mr-3" data-toggle="tooltip" data-placement="top" title="Compartilhar"><i class="fas fa-share-alt" onclick="CompartilharRepo('@item.FileId')"></i></a>
-                                    <a href="javascript:void(0)" class="mr-1"  data-toggle="modal"  data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir" onclick="ExcluirRepo(@item.RepoId)"></i></a>
+                                    <a href="javascript:void(0)" class="mr-1"  data-toggle="modal"  data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir" onclick="ExcluirRepo(@item.RepoId, '@item.FileId')"></i></a>
                                     @*<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">

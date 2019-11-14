@@ -40,7 +40,7 @@
         });
     }
 
-    function ExcluirRepo(obj) {
+    function ExcluirRepo(obj1, obj2) {
         Swal.fire({
   title: 'Are you sure?',
   text: "You won't be able to revert this!",
@@ -55,7 +55,7 @@
             method: "POST",
             dataType: "JSON",
         url: '@Url.Action("ExcluirRepo", "Perfil")',
-        data: { repoId: obj},
+        data: { repoId: obj1, fileId: obj2},
             success: function (resp) {
                 if (resp) {
                     SuccessAddRepo();

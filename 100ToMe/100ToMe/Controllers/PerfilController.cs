@@ -92,8 +92,20 @@ namespace _100ToMe.Controllers
             return false;
         }
 
-        public bool ExcluirRepo(int repoId)
+        public bool ExcluirRepo(int repoId, string fileId)
         {
+
+            string caminho_WebRoot = _hostingEnvironment.WebRootPath;
+            string pasta = "Arquivos_Usuario";
+            string caminhoDestinoArquivo = caminho_WebRoot + "\\Arquivos\\" + pasta + "\\";
+
+            List<Files> files = new List<Files>();
+            files = _repositorieDAO.BuscarFilesPorRepo(fileId);
+            foreach (Files item in files)
+            {
+                string caminhoDestinoArquivoOriginal = caminhoDestinoArquivo + "\\Recebidos\\" + item.Name;
+                System.IO.File.Delete(caminhoDestinoArquivoOriginal);
+            }
             if (_repositorieDAO.ExcluirRepo(repoId))
             {
                 return true;
@@ -103,7 +115,7 @@ namespace _100ToMe.Controllers
 
         public async Task CompartilharRepo(string fileId)
         {
-            
+
             List<Files> files = new List<Files>();
             files = _repositorieDAO.BuscarFilesPorRepo(fileId);
 
@@ -112,7 +124,7 @@ namespace _100ToMe.Controllers
             {
                 await EmailFiles.EnviarAsync(item.FilePath, item.Name);
             }
-            
+
 
 
         }
