@@ -25,26 +25,38 @@ namespace _100ToMe.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            BuscaVerificaSeRepoExisteTemFiles(repoLink);
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                return await VerificaEmailChamaSendGrid(repoLink, email, nome);
+            }
+
+            ViewBag.repoLink = repoLink;
+            return View();
+        }
+
+        private async Task<IActionResult> VerificaEmailChamaSendGrid(string repoLink, string email, string nome)
+        {
+            List<Files> files = new List<Files>();
+            files = _repositorieDAO.BuscarFilesPorRepo(repoLink);
+            await EmailFiles.EnviarAsync(files, email, nome);
+            ViewBag.SuccessShare = "Ok, olhe sua caixa de emails !";
+            return View();
+        }
+
+        private void BuscaVerificaSeRepoExisteTemFiles(string repoLink)
+        {
             Repositorie repositorie = new Repositorie();
             repositorie = _repositorieDAO.BuscarRepoPorFileId(repoLink);
             if (repositorie != null && repositorie.QuantFiles != 0)
             {
                 ViewBag.NameUser = repositorie.Email;
-            } else
+            }
+            else
             {
                 ViewBag.LinkNull = "Este link expirou, foi excluido ou não possui arquivos... =(";
             }
-            
-            if (!string.IsNullOrEmpty(email))
-            {
-                List<Files> files = new List<Files>();
-                files = _repositorieDAO.BuscarFilesPorRepo(repoLink);
-                await EmailFiles.EnviarAsync(files, email, nome);
-                ViewBag.SuccessShare = "Ok, olhe sua caixa de emails !";
-                return View();
-            }
-            ViewBag.repoLink = repoLink;
-            return View();
         }
     }
 }

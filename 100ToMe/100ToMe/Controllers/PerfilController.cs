@@ -76,7 +76,7 @@ namespace _100ToMe.Controllers
         }
 
         //Adiciona novos repositórios.
-        public bool AddRepo(string name)
+        public JsonResult AddRepo(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -85,12 +85,20 @@ namespace _100ToMe.Controllers
                 repositorie.UserId = _userManager.GetUserId(User);
                 repositorie.Email = _userManager.GetUserName(User);
                 repositorie.FileId = _userManager.GetUserId(User) + "_" + DateTimeBR.DataHoraAtual().Ticks;
-                if (_repositorieDAO.AdicionarRepositories(repositorie))
+
+                if (BuscarQuantRepoPorUser(repositorie.UserId).Count < 5)
                 {
-                    return true;
+                    if (_repositorieDAO.AdicionarRepositories(repositorie))
+                    {
+                        return Json(JsonConvert.SerializeObject("AllowedName"));
+                    }
+                    else
+                    {
+                        return Json(JsonConvert.SerializeObject("NotAllowedName"));
+                    }
                 }
             }
-            return false;
+            return Json(JsonConvert.SerializeObject("NotAllowedQuant"));
         }
 
         public bool ExcluirRepo(int repoId, string fileId)
@@ -100,6 +108,17 @@ namespace _100ToMe.Controllers
             string pasta = "Arquivos_Usuario";
             string caminhoDestinoArquivo = caminho_WebRoot + "\\Arquivos\\" + pasta + "\\";
 
+            PercorreFilesDoRepo(fileId, caminhoDestinoArquivo);
+
+            if (_repositorieDAO.ExcluirRepo(repoId))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void PercorreFilesDoRepo(string fileId, string caminhoDestinoArquivo)
+        {
             List<Files> files = new List<Files>();
             files = _repositorieDAO.BuscarFilesPorRepo(fileId);
             foreach (Files item in files)
@@ -107,11 +126,6 @@ namespace _100ToMe.Controllers
                 string caminhoDestinoArquivoOriginal = caminhoDestinoArquivo + "\\Recebidos\\" + item.Name;
                 System.IO.File.Delete(caminhoDestinoArquivoOriginal);
             }
-            if (_repositorieDAO.ExcluirRepo(repoId))
-            {
-                return true;
-            }
-            return false;
         }
 
         public JsonResult GerarLink(string repoLink)
@@ -120,13 +134,8 @@ namespace _100ToMe.Controllers
             files = _repositorieDAO.BuscarFilesPorRepo(repoLink);
             if (files.Count > 0)
             {
-                string url = "https://localhost:44363/ShareRepo?repoLink=" + repoLink;
-                Repositorie repositorie = new Repositorie();
-                repositorie = _repositorieDAO.BuscarRepoPorFileId(repoLink);
-                if (repositorie.Link == null)
-                {
-                    _repositorieDAO.InserirLinkRepoDb(repositorie, url);
-                }
+                string url = GeraLinkInsereNoDb(repoLink);
+
                 return Json(JsonConvert.SerializeObject(url));
             }
             else
@@ -134,6 +143,24 @@ namespace _100ToMe.Controllers
                 string url = "NotAllowed";
                 return Json(JsonConvert.SerializeObject(url));
             }
+        }
+
+        private string GeraLinkInsereNoDb(string repoLink)
+        {
+            string url = "https://localhost:44363/ShareRepo?repoLink=" + repoLink;
+            Repositorie repositorie = new Repositorie();
+            repositorie = _repositorieDAO.BuscarRepoPorFileId(repoLink);
+            if (repositorie.Link == null)
+            {
+                _repositorieDAO.InserirLinkRepoDb(repositorie, url);
+            }
+
+            return url;
+        }
+
+        private List<Repositorie> BuscarQuantRepoPorUser(string userId)
+        {
+            return _repositorieDAO.BuscarRepoDeUser(userId);
         }
     }
 }

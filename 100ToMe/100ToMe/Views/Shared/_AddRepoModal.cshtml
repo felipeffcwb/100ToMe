@@ -31,11 +31,20 @@
             url: '@Url.Action("AddRepo", "Perfil")',
             data: { name: _name },
             success: function (resp) {
-                if (resp) {
-                    SuccessAddRepo();
-                } else {
-                    ErrorAddRepo();
-                }
+                var data = JSON.parse(resp);
+                switch (data) {
+                    case "AllowedName":
+                        SuccessAddRepo();
+                        break;
+
+                    case "NotAllowedName":
+                        ErrorAddRepoName();
+                        break;
+
+                    case "NotAllowedQuant":
+                        ErrorAddRepo();
+                        break;
+                }     
     },
         });
     }
@@ -84,6 +93,15 @@
   icon: 'error',
   title: 'Oops...',
   text: 'Something went wrong!',
+  footer: '<a href>Why do I have this issue?</a>'
+})
+    }
+
+     function ErrorAddRepoName() {
+        Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Um repo com este nome já existe.',
   footer: '<a href>Why do I have this issue?</a>'
 })
     }
