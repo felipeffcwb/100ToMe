@@ -47,6 +47,7 @@ namespace _100ToMe.DAO
                 Repositorie repositorie = BuscarRepoPorId(repoId);
                 repositorie.DataLastChange = DateTimeBR.DataHoraAtual();
                 repositorie.Status = false;
+                repositorie.QuantFiles = 0;
                 _context.Entry(repositorie).State = EntityState.Modified;
                 _context.SaveChanges();
 
@@ -148,7 +149,7 @@ namespace _100ToMe.DAO
         {
             try
             {
-                return _context.repositories.FirstOrDefault(x => x.FileId.Equals(fileId));
+                return _context.repositories.FirstOrDefault(x => x.FileId.Equals(fileId) && x.Status);
             }
             catch (Exception)
             {
@@ -177,7 +178,7 @@ namespace _100ToMe.DAO
             try
             {
                 Files files = new Files();
-                files = _context.files.FirstOrDefault(x => x.ArquivoId.Equals(fileId));
+                files = _context.files.FirstOrDefault(x => x.ArquivoId.Equals(fileId) && x.Status);
                 return files;
             }
             catch (Exception)
@@ -208,6 +209,22 @@ namespace _100ToMe.DAO
             catch (Exception)
             {
                 return false;
+                throw;
+            }
+        }
+
+        internal void InserirLinkRepoDb(Repositorie repositorie, string repoLink)
+        {
+            try
+            {
+                repositorie.DataLastChange = DateTimeBR.DataHoraAtual();
+                repositorie.Link = repoLink;
+                _context.Entry(repositorie).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

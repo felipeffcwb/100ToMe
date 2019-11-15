@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace _100ToMe.Controllers
 {
@@ -113,20 +114,26 @@ namespace _100ToMe.Controllers
             return false;
         }
 
-        public async Task CompartilharRepo(string fileId)
+        public JsonResult GerarLink(string repoLink)
         {
-
             List<Files> files = new List<Files>();
-            files = _repositorieDAO.BuscarFilesPorRepo(fileId);
-
-            //fazer foreach na classe do sendgrid para que todos os anexos sejam enviados em apenas 1 email
-            foreach (Files item in files)
+            files = _repositorieDAO.BuscarFilesPorRepo(repoLink);
+            if (files.Count > 0)
             {
-                await EmailFiles.EnviarAsync(item.FilePath, item.Name);
+                string url = "https://localhost:44363/ShareRepo?repoLink=" + repoLink;
+                Repositorie repositorie = new Repositorie();
+                repositorie = _repositorieDAO.BuscarRepoPorFileId(repoLink);
+                if (repositorie.Link == null)
+                {
+                    _repositorieDAO.InserirLinkRepoDb(repositorie, url);
+                }
+                return Json(JsonConvert.SerializeObject(url));
             }
-
-
-
+            else
+            {
+                string url = "NotAllowed";
+                return Json(JsonConvert.SerializeObject(url));
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 <partial name="_StatusMessageView" for="StatusMessage" />
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+
 <div class="container">
     <div class="row d-flex align-items-center" style="min-height:150px;">
         <div class="col-12 d-flex justify-content-between">
@@ -16,70 +17,67 @@
         <div class="container d-flex flex-column">
             <div class="row" style="height:60px; display:table !important;"></div>
             <div class="row cardsRow p-5 border" style="border-radius:3px;">
-                @foreach (Repositorie item in Model.repositories)
+                @if (Model.repositories != null)
                 {
-                    <div class="col-md-4 col-sm-12 mb-5 d-flex justify-content-center align-items-center">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-header d-flex justify-content-center">
-                                <i class="far fa-folder" style="color:#ccc; font-size:100px;"></i>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@item.Name</h5>
-                                <label>N° de arquivos: @item.QuantFiles</label>
-                                <div class="container d-flex justify-content-start" style="padding:0 !important;">
-                                    <a href="@Url.Action("Index", "Repositories", new {fileid = item.FileId })" class="mr-3" data-toggle="tooltip" data-placement="top" title="Entrar no repo"><i class="fas fa-sign-in-alt"></i></a>
-                                    <a href="javascript:void(0)" class="mr-3" data-toggle="tooltip" data-placement="top" title="Compartilhar"><i class="fas fa-share-alt" onclick="CompartilharRepo('@item.FileId')"></i></a>
-                                    <a href="javascript:void(0)" class="mr-1"  data-toggle="modal"  data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir" onclick="ExcluirRepo(@item.RepoId, '@item.FileId')"></i></a>
-                                    @*<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Novo Repo</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <p>Deseja excluir este repositório ?</p>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary">Sim!</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
+                    @foreach (Repositorie item in Model.repositories)
+                    {
+                        <div class="col-md-4 col-sm-12 mb-5 d-flex justify-content-center align-items-center">
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-header d-flex justify-content-center">
+                                    <i class="far fa-folder" style="color:#ccc; font-size:100px;"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.Name</h5>
+                                    <label>N° de arquivos: @item.QuantFiles</label>
+                                    <div class="container d-flex justify-content-start" style="padding:0 !important;">
+                                        <a href="@Url.Action("Index", "Repositories", new {fileid = item.FileId })" class="mr-3" data-toggle="tooltip" data-placement="top" title="Entrar no repo"><i class="fas fa-sign-in-alt"></i></a>
+                                        <a href="javascript:void(0)" class="mr-3" data-toggle="tooltip" data-placement="top" title="Compartilhar" onclick="GerarLink('@item.FileId')"><i class="fas fa-share-alt"></i></a>
+                                        <a href="javascript:void(0)" class="mr-1" data-toggle="modal" data-target="#exampleModalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Excluir" onclick="ExcluirRepo(@item.RepoId, '@item.FileId')"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>
     </div>
 </div>
+<partial name="_ModalLink" />
 <script>
-    function CompartilharRepo(obj) {
+    function GerarLink(obj) {
         $.ajax({
             method: "POST",
             dataType: "JSON",
-        url: '@Url.Action("CompartilharRepo", "Perfil")',
-        data: { fileId: obj},
+        url: '@Url.Action("GerarLink", "Perfil")',
+        data: { repoLink: obj },
             success: function (resp) {
-                if (resp) {
-                    SuccessAddRepo();
+                var data = JSON.parse(resp);
+                if (data != "NotAllowed") {
+                    $("#linkInput").val(data);
+                    $("#ModalLink").modal("show");
                 } else {
-
+                    ErroGerarLink();
                 }
-    },
-    });
+            },
+        });
     }
+
 
     function SuccessAddRepo() {
         Swal.fire({
   icon: 'success',
+  title: 'Your work has been saved',
+}).then((result) => {
+    if (result.value) {
+        location.reload();
+  }
+})
+    }
+
+    function ErroGerarLink() {
+        Swal.fire({
+  icon: 'error',
   title: 'Your work has been saved',
 }).then((result) => {
     if (result.value) {
