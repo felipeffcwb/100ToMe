@@ -7,19 +7,11 @@
 }
 <div class="container">
     <div class="row d-flex align-items-center" style="min-height:150px;">
-        @if (ViewBag.Erro != null)
+        @if (ViewBag.ErrorList != null)
         {
             <div class="alert alert-danger alert-dismissible" role="alert" style="height:60px; width:100%;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                @ViewBag.Erro
-            </div>
-        }
-
-        @if (ViewBag.Success != null)
-        {
-            <div class="alert alert-success alert-dismissible" role="alert" style="height:60px; width:100%;">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                @ViewBag.Success
+                @ViewBag.ErrorList
             </div>
         }
         <div class="col-12 d-flex justify-content-between">
@@ -104,14 +96,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-
-                @if (ViewBag.ErrorList != null)
-                {
-                    <div class="alert alert-danger alert-dismissible" role="alert" style="height:60px; width:100%;">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        @ViewBag.ErrorList
                     </div>
                 }
             </div>

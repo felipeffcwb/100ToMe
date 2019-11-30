@@ -1,2 +1,5 @@
-# 100ToMe
-	Projeto de compartilhamento de arquivos em nuvem via email, iniciativa independente.
+# 100toMe
+
+## Intro
+```
+Projeto de estudo com asp.net core 3.0 e api sendgrid. Plataforma de compartilhamento de arquivos.

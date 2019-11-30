@@ -24,13 +24,20 @@ namespace _100ToMe.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public IActionResult Index(string fileId)
+        public IActionResult Index(string fileId, string fileMaxSize)
         {
             HttpContext.Session.SetString("FileId", fileId);
             List<Files> files = new List<Files>();
             files = _repositorieDAO.BuscarFilesPorRepo(fileId);
             if (files.Count > 0)
             {
+                ViewBag.ErrorList = fileMaxSize;
+                return View(files);
+            }
+
+            if (!string.IsNullOrEmpty(fileMaxSize))
+            {
+                ViewBag.ErrorList = fileMaxSize;
                 return View(files);
             }
             ViewBag.ErrorList = "Você ainda não possui arquivos, suba alguma coisa.";
@@ -52,17 +59,29 @@ namespace _100ToMe.Controllers
             //Conta quantos arquivos chegaram
             int quantFiles = arquivos.Count();
 
+            string fileMaxSize = "";
+
             // processa os arquivo enviados
             //percorre a lista de arquivos selecionados
             foreach (var arquivo in arquivos)
             {
+                //Converte tamanho do arquivo em bytes para mbytes
+                var byteSize = arquivo.Length;
+                var mbSize = 1000000;
+                var result = (byteSize / mbSize);
+
                 //verifica se existem arquivos 
                 if (arquivo == null || arquivo.Length == 0)
                 {
                     //retorna a viewdata com erro
-                    ViewBag.Erro = "Error: Arquivo(s) não selecionado(s)";
-                    return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile });
+                    fileMaxSize = "Selecione algum arquivo...";
+                    return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile, fileMaxSize });
                 }
+                else if (result > 10)
+                {
+                    fileMaxSize = "Os seus arquivos não podem ter mais de 10MB.";
+                    return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile, fileMaxSize });
+                } 
                 // < define a pasta onde vamos salvar os arquivos >
                 string pasta = "Arquivos_Usuario";
 
@@ -98,11 +117,7 @@ namespace _100ToMe.Controllers
                 //Guarda caminho em que arquivo foi guardado
                 string caminhoArquivoDb = caminhoDestinoArquivo + "\\Recebidos\\";
 
-                //Converte tamanho do arquivo em bytes para mbytes
-                var byteSize = arquivo.Length;
-                var mbSize = 1048576.0;
-                var result = (byteSize / mbSize) * mbSize;
-
+                
                 //cria nova linha com dados do arquivo no banco
                 Files files = new Files();
                 files.FileId = sessionIdFile;
@@ -120,11 +135,10 @@ namespace _100ToMe.Controllers
             }
 
             //monta a ViewData que será exibida na view como resultado do envio 
-            ViewBag.Success = $"{arquivos.Count} arquivos foram enviados ao servidor, " +
-             $"com tamanho total de : {tamanhoArquivos} bytes";
+            fileMaxSize = $"{arquivos.Count} arquivos foram enviados ao servidor";
 
             //retorna a viewdata
-            return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile });
+            return RedirectToAction("Index", "Repositories", new { fileId = sessionIdFile, fileMaxSize });
         }
 
         public bool ExcluirFiles(string nameFile, int fileId)
